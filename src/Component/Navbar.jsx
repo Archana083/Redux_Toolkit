@@ -1,8 +1,25 @@
 import React from 'react'
-
+import { useSelector } from 'react-redux'
+const navData = [
+  {
+    id:1,
+    cName:"nav-link active",
+    page:"Home",
+    url:"/"    
+  },
+  
+  {
+    id:2,
+    cName:"nav-link",
+    page:"Add",
+    url:"/add ",    
+  },
+  
+]
 const Header = () => {
 
-  
+   const allUsers = useSelector((state) => state.app.users);
+
   return (
     <>
     <nav className="navbar navbar-expand-lg navbar-light bg-success">
@@ -23,12 +40,22 @@ const Header = () => {
     </button>
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-        <li className="nav-item">
-          <a className="nav-link active" aria-current="page" href="#">
-            Home
+      {
+        navData.map((item,index) => {
+          return(
+            <li key={index} className="nav-item">
+          <a className={item.cName} aria-current="page" href={item.url}>
+          {item.page}
           </a>
         </li>
-       
+          )
+        })
+      }      
+      <li className="nav-item">
+          <a className="nav-link" aria-current="page" href="#">
+          All Post {allUsers.length}
+          </a>
+        </li>
               <li className="nav-item dropdown">
           <a
             className="nav-link dropdown-toggle"

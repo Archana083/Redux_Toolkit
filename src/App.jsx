@@ -5,18 +5,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Layout from './page/Layout';
 import Home from './page/Home';
+import Updatepage from './page/Updatepage';
+import AddPage from './page/AddPage';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
       <BrowserRouter>
      <Routes>
-      <Route to="/" element={<Layout/>}>
+      <Route path="/" element={<Layout/>}>
         <Route index element={<Home/>}/>
-        <Route/>
-      </Route>
+        <Route path="/update/:id" element={<Updatepage/>}/>
+        <Route path="/add" element={<AddPage/>} />
+        </Route>
      </Routes>
       </BrowserRouter>
 
