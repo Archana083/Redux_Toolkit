@@ -1,14 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
 const navData = [
+  
   {
     id: 1,
-    cName: "nav-link active",
-    page: "Home",
-    url: "/",
-  },
-  {
-    id: 2,
     cName: "nav-link",
     page: "Add",
     url: "/add ",
@@ -52,8 +47,8 @@ const Header = () => {
               })}
               
               <li className="nav-item">
-                <a className="nav-link" aria-current="page" href="#">
-                  All Post {allUsers.length}
+                <a className="nav-link" aria-current="page" href="/">
+                  All Data {allUsers.length}
                 </a>
               </li>
               <li className="nav-item dropdown">
