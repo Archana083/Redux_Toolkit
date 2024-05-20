@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { createUser } from '../Api/UserDetailSlice';
-import img1 from "../assets/img/img1.jpg";
 
 const AddPage = () => {
     const [users, setUsers] = useState({});
