@@ -53,10 +53,18 @@ export const getUser = createAsyncThunk("getUser", async () => {
       }
     )
     
-    export const getUserById = createAsyncThunk(
-      "getUserById",
-      async (id, {rejectWithValue}) => {
-        const response = await fetch(`https://6637499c288fedf6937fefa6.mockapi.io/crude/${id}`, {method: "patch"});
+    export const updateUser = createAsyncThunk(
+      "updateUser",
+      async (data, {rejectWithValue}) => {
+        console.log("update Data", data);
+        const response = await fetch(`https://6637499c288fedf6937fefa6.mockapi.io/crude/${data.id}`, 
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type" : "application/json",
+          },
+          body:JSON.stringify(data),
+        });
         try{
             const result = await response.json();
             console.log(result);

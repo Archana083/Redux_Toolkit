@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { createUser } from '../Api/UserDetailSlice';
+import img1 from "../assets/img/img1.jpg";
 
 const AddPage = () => {
     const [users, setUsers] = useState({});
@@ -18,9 +19,17 @@ const AddPage = () => {
     }
   return (
     <>
-    <div className='container mt-5'>
+    <div className='container mt-5 addpage'>
     <div className='row mt-5'>
-<div className='col-lg-6 offset-lg-3 card mt-5 p-5 shadow-sm'>
+
+    <div className='col-lg-6 img '>
+    <div></div>
+
+    </div>
+<div className='col-lg-5'>
+
+<div className='card shadow-sm rounded '>
+<h1 className='text-center'>Add User</h1>
 
 <form onSubmit={handleSubmit}>
     <div className="mb-3">
@@ -57,6 +66,7 @@ const AddPage = () => {
   </button>
   </div>
 </form>
+</div>
 </div>
     </div>
     </div>

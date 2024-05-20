@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 
 const Modal = ({id, show, setShow}) => {
     const allUser = useSelector((state) => state.app.users);
+    console.log(allUser);
     const singleUser = allUser.filter((item) => item.id == id);
       console.log(singleUser);
     return (
@@ -43,9 +44,7 @@ const Modal = ({id, show, setShow}) => {
           >
             Close
           </button>
-          <button type="button" className="btn btn-primary">
-            Save changes
-          </button>
+         
         </div>
       </div>
     </div>

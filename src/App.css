@@ -2,3 +2,33 @@
 a{
 text-decoration: none !important;
 }
+
+.addpage .img{
+    height: 700px;
+    background:  url(assets/img/img1.jpg) no-repeat center; 
+    background-size: cover;
+    
+
+}
+
+.addpage .img div{
+   background: rgba(246, 243, 243, 0.162) center no-repeat cover;
+ backdrop-filter: blur(5px); 
+ height: 700px;
+  width: 710px;
+  -webkit-backdrop-filter: blur(5px); 
+  margin-right: 0 !important;
+
+}
+
+.addpage .card 
+{
+    margin-top: 200px;
+    padding: 30px;
+    margin-left: 50px;
+}
+
+.home
+{
+    background:  url(assets/img/img2.jpg) no-repeat center; 
+}
