@@ -38,7 +38,7 @@ const Header = () => {
                     <a
                       className={item.cName}
                       aria-current="page"
-                      href={item.url}
+                      href="/add"
                     >
                       {item.page}
                     </a>
