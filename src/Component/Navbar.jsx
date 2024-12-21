@@ -1,5 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+
+
 const navData = [
   
   {
@@ -35,13 +38,13 @@ const Header = () => {
               {navData.map((item, index) => {
                 return (
                   <li key={index} className="nav-item">
-                    <a
-                      className={item.cName}
-                      aria-current="page"
-                      href="/add"
-                    >
-                      {item.page}
-                    </a>
+                     <NavLink
+                  className={item.cName}
+                  to={item.url}
+                  aria-label={`Navigate to ${item.page}`}
+                >
+                  {item.page}
+                </NavLink>
                   </li>
                 );
               })}
