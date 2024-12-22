@@ -1,87 +1,69 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
-//create action
+// Base URL for the API
+const BASE_URL = "https://6637499c288fedf6937fefa6.mockapi.io/crude";
 
+// Create User Action
 export const createUser = createAsyncThunk(
   "createUser",
   async (data, { rejectWithValue }) => {
-    const response = await fetch(
-      "https://6637499c288fedf6937fefa6.mockapi.io/crude",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
     try {
-      const result = await response.json();
-      return result;
+      const response = await axios.post(BASE_URL, data);
+      return response.data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error.response ? error.response.data : error.message);
     }
   }
 );
 
-export const getUser = createAsyncThunk("getUser", async () => {
-  const response = await fetch(
-    "https://6637499c288fedf6937fefa6.mockapi.io/crude"
-  );
-  try {
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    return rejectWithValue(error);
+// Get Users Action
+export const getUser = createAsyncThunk(
+  "getUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(BASE_URL);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response ? error.response.data : error.message);
+    }
   }
-});
+);
 
+// Delete User Action
+export const deleteUser = createAsyncThunk(
+  "deleteUser",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(`${BASE_URL}/${id}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response ? error.response.data : error.message);
+    }
+  }
+);
 
-    export const deleteUser = createAsyncThunk(
-      "deleteUser",
-      async (id, {rejectWithValue}) => {
-        const response = await fetch(`https://6637499c288fedf6937fefa6.mockapi.io/crude/${id}`, {method: "DELETE"});
-        try{
-            const result = await response.json();
-            console.log(result);
-            return result;
-        }
-        catch(error)
-        {
-       return rejectWithValue(error);
-        }
-      }
-    )
-    
-    export const updateUser = createAsyncThunk(
-      "updateUser",
-      async (data, {rejectWithValue}) => {
-        console.log("update Data", data);
-        const response = await fetch(`https://6637499c288fedf6937fefa6.mockapi.io/crude/${data.id}`, 
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type" : "application/json",
-          },
-          body:JSON.stringify(data),
-        });
-        try{
-            const result = await response.json();
-            console.log(result);
-            return result;
-        }
-        catch(error)
-        {
-       return rejectWithValue(error);
-        }
-      }
-    )
+// Update User Action
+export const updateUser = createAsyncThunk(
+  "updateUser",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(`${BASE_URL}/${data.id}`, data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response ? error.response.data : error.message);
+    }
+  }
+);
 
-    const initialState = {
-      users: [],
-      loading: false,
-      error: null,
-    };   
+// Initial State
+const initialState = {
+  users: [],
+  loading: false,
+  error: null,
+};
+
+// User Slice
 export const userDetail = createSlice({
   name: "userDetail",
   initialState,
@@ -93,10 +75,10 @@ export const userDetail = createSlice({
       })
       .addCase(createUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.users = action.payload;
+        state.users.push(action.payload);
       })
       .addCase(createUser.rejected, (state, action) => {
-        state.error = action.payload.message;
+        state.error = action.payload;
         state.loading = false;
       })
       .addCase(getUser.pending, (state) => {
@@ -116,18 +98,25 @@ export const userDetail = createSlice({
       .addCase(deleteUser.fulfilled, (state, action) => {
         state.loading = false;
         state.users = state.users.filter((user) => user.id !== action.payload.id);
-
-        // const {id} = action.payload;
-        // if(id)
-        //   {
-        //     state.users = state.users.filter((item) => item.id !== id);
-        //   }
-        console.log("delete action" , action.payload);
       })
       .addCase(deleteUser.rejected, (state, action) => {
         state.error = action.payload;
         state.loading = false;
       })
+      .addCase(updateUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.loading = false;
+        const index = state.users.findIndex((user) => user.id === action.payload.id);
+        if (index !== -1) {
+          state.users[index] = action.payload;
+        }
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
+      });
   },
 });
 
